@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Scaffold(
+        body: ListView(
+          children: [
+            // Load a Lottie file from your assets
+            Lottie.asset('assets/69-eye-flat-edited.json'),
+          ],
+        ),
+      ),
     );
   }
 }
