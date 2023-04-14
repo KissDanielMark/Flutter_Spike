@@ -46,11 +46,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          AnimatedContainer(
+          /*AnimatedContainer(
             width: _bigger ? 100 : 500,
             child: Image.asset('assets/baby_yoda.png'),
             duration: Duration(seconds: 1),
-          ),
+          ),*/
           TextButton(onPressed: () => setState(() {
               _bigger = !_bigger;
           }), child: /*Text(_bigger ? "Növölj" : "Csökkenj")*/
@@ -58,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
             width: _bigger ? 100 : 500,
             child: Image.asset('assets/baby_yoda.png'),
             duration: Duration(seconds: 1),
+            decoration: BoxDecoration(gradient: RadialGradient(colors: const [Colors.purple, Colors.transparent], stops: [_bigger ? 1.2 : -0.5, 1.0])),
           )
           )
         ],)
