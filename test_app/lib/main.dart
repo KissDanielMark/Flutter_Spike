@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         body: ListView(
           children: [
             // Load a Lottie file from your assets
-            Lottie.asset('assets/69-eye-flat-edited.json'),
+            Lottie.asset('assets/Aniki_Hamster.json'),
           ],
         ),
       ),
