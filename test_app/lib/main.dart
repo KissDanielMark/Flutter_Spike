@@ -16,15 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: Scaffold(
-        body: ListView(
-          children: [
-            // Load a Lottie file from your assets
-            Lottie.asset('assets/69-eye-flat-edited.json'),
-          ],
-        ),
-      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
     );
   }
 }
@@ -38,39 +31,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  double targetValue = 24.0;
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have  the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+            child: TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0, end: targetValue),
+              duration: const Duration(seconds: 1),
+              builder: (BuildContext context, double size, Widget? child) {
+                return Positioned(top: targetValue, bottom: 0, left: 0, right: 0, child: IconButton(
+                  iconSize: size,
+                  color: Colors.blue,
+                  icon: child!,
+                  onPressed: () {
+                    setState(() {
+                      targetValue = targetValue == 24.0 ? 48.0 : 24.0;
+                    });
+                  },
+                )
+                );
+              },
+              child: const Icon(Icons.aspect_ratio),
+            )
+      )
     );
   }
 }
