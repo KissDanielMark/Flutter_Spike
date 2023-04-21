@@ -16,15 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: Scaffold(
-        body: ListView(
-          children: [
-            // Load a Lottie file from your assets
-            Lottie.asset('assets/69-eye-flat-edited.json'),
-          ],
-        ),
-      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -37,13 +29,25 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _animationController = AnimationController(
+        duration: const Duration(seconds: 10),
+        vsync: this
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -53,24 +57,27 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          child: GestureDetector(
+            child: RotationTransition(
+              turns: _animationController,
+              alignment: Alignment.center,
+              child: Container(
+                decoration: BoxDecoration(color: Colors.purple[800]),
+                width: 200,
+                height: 200,
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+            onTap: (){
+              if(_animationController.isAnimating){
+                _animationController.stop();
+              }
+              else{
+                _animationController.repeat();
+              }
+            },
+          )
+
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
