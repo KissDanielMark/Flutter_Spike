@@ -1,5 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -16,15 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: Scaffold(
-        body: ListView(
-          children: [
-            // Load a Lottie file from your assets
-            Lottie.asset('assets/69-eye-flat-edited.json'),
-          ],
-        ),
-      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -40,6 +34,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  bool _bigger = false;
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -49,6 +45,29 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          /*AnimatedContainer(
+            width: _bigger ? 100 : 500,
+            child: Image.asset('assets/baby_yoda.png'),
+            duration: Duration(seconds: 1),
+          ),*/
+          TextButton(onPressed: () => setState(() {
+              _bigger = !_bigger;
+          }), child: /*Text(_bigger ? "Növölj" : "Csökkenj")*/
+          //https://medium.com/flutter/flutter-animation-basics-with-implicit-animations-95db481c5916
+          //https://api.flutter.dev/flutter/animation/Curves-class.html
+          AnimatedContainer(
+            width: _bigger ? 100 : 500,
+            child: Image.asset('assets/baby_yoda.png'),
+            duration: Duration(seconds: 1),
+            curve: Curves.easeInOutCubicEmphasized,
+            decoration: BoxDecoration(gradient: RadialGradient(colors: const [Colors.purple, Colors.transparent], stops: [_bigger ? 1.2 : -0.5, 1.0])),
+          )
+          )
+        ],)
+    );
+
+      Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
