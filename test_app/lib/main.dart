@@ -57,14 +57,25 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         title: Text(widget.title),
       ),
       body: Center(
-          child: RotationTransition(
-            turns: _animationController,
-          alignment: Alignment.center,
-            child: Container(
+          child: GestureDetector(
+            child: RotationTransition(
+              turns: _animationController,
+              alignment: Alignment.center,
+              child: Container(
                 decoration: BoxDecoration(color: Colors.purple[800]),
                 width: 200,
                 height: 200,
-            ),)
+              ),
+            ),
+            onTap: (){
+              if(_animationController.isAnimating){
+                _animationController.stop();
+              }
+              else{
+                _animationController.repeat();
+              }
+            },
+          )
 
       ),
     );
