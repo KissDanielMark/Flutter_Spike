@@ -54,10 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
           TextButton(onPressed: () => setState(() {
               _bigger = !_bigger;
           }), child: /*Text(_bigger ? "Növölj" : "Csökkenj")*/
+          //https://medium.com/flutter/flutter-animation-basics-with-implicit-animations-95db481c5916
+          //https://api.flutter.dev/flutter/animation/Curves-class.html
           AnimatedContainer(
             width: _bigger ? 100 : 500,
             child: Image.asset('assets/baby_yoda.png'),
             duration: Duration(seconds: 1),
+            curve: Curves.easeInOutCubicEmphasized,
             decoration: BoxDecoration(gradient: RadialGradient(colors: const [Colors.purple, Colors.transparent], stops: [_bigger ? 1.2 : -0.5, 1.0])),
           )
           )
