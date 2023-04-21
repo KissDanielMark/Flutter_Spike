@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'dart:math' as math;
 
 void main() {
   runApp(const MyApp());
@@ -34,35 +35,43 @@ class _MyHomePageState extends State<MyHomePage> {
 
   double targetValue = 1;
 
+  double scaleIn(double value) => value * 1.0;
+
+  double angleIn(double value) => value * math.pi;
+
   @override
   Widget build(BuildContext context) {
 
+    //https://medium.com/@gondaimgano/multiple-animations-using-tweenanimationbuilder-9243dd7d39e6
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-            child: TweenAnimationBuilder(
-              tween: Tween<double>(begin: 0, end: 1),
-              duration: const Duration(seconds: 10),
-              builder: (BuildContext context, double size, Widget? child) {
-                return Opacity(
-                  opacity: size,
-                  child: Padding(padding:EdgeInsets.only(top: size*200), child: child,/*child: IconButton(
-                  iconSize: size,
-                  color: Colors.blue,
-                  icon: child!, onPressed: () {  },
-                  /*onPressed: () {
-                    setState(() {
-                      targetValue = targetValue == 24.0 ? 48.0 : 24.0;
-                    });
-                  },*/
-                ),*/)
-                );
-              },
-              child: const Icon(Icons.aspect_ratio),
-
-            )
+        child: TweenAnimationBuilder(
+          child: Container(
+            decoration: BoxDecoration(color: Colors.purple[800]),
+            width: 200,
+            height: 200,
+          ),
+          duration: Duration(milliseconds: 100),
+          curve: Curves.easeOut,
+          tween: Tween(begin: 0.0, end: 1.0),
+          builder: (context, value, child) {
+            return Transform.scale(
+              scale: scaleIn(value),
+              child: Transform.rotate(
+                angle: angleIn(value),
+                child: child/*Container(
+                  decoration: BoxDecoration(color: Colors.purple[800]),
+                  width: 200,
+                  height: 200,
+                ),*/
+              ),
+            );
+          },
+        ),
       )
     );
   }
