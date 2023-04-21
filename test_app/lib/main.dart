@@ -32,7 +32,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  double targetValue = 24.0;
+  double targetValue = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -42,23 +42,26 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-            child: TweenAnimationBuilder<double>(
-              tween: Tween<double>(begin: 0, end: targetValue),
-              duration: const Duration(seconds: 1),
+            child: TweenAnimationBuilder(
+              tween: Tween<double>(begin: 0, end: 1),
+              duration: const Duration(seconds: 10),
               builder: (BuildContext context, double size, Widget? child) {
-                return Positioned(top: targetValue, bottom: 0, left: 0, right: 0, child: IconButton(
+                return Opacity(
+                  opacity: size,
+                  child: Padding(padding:EdgeInsets.only(top: size*200), child: child,/*child: IconButton(
                   iconSize: size,
                   color: Colors.blue,
-                  icon: child!,
-                  onPressed: () {
+                  icon: child!, onPressed: () {  },
+                  /*onPressed: () {
                     setState(() {
                       targetValue = targetValue == 24.0 ? 48.0 : 24.0;
                     });
-                  },
-                )
+                  },*/
+                ),*/)
                 );
               },
               child: const Icon(Icons.aspect_ratio),
+
             )
       )
     );
